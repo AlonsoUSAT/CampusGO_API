@@ -1,0 +1,847 @@
+{
+  "info": {
+    "_postman_id": "campusgo-base-lab-2026",
+    "name": "CampusGo API - Base Laboratorio",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:5000"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "00 - Estado API",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            ""
+          ]
+        }
+      }
+    },
+    {
+      "name": "01 - Login Conductor (Carlos)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"carlos.mendoza@usat.edu.pe\",\n  \"password\": \"CampusGo#2026\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "02 - Login Pasajero (Juan)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"juan.perez@usat.edu.pe\",\n  \"password\": \"CampusGo#2026\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "03 - Login (Body Incompleto - 400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"juan.perez@usat.edu.pe\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "04 - Login (Credenciales Incorrectas - 401)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"juan.perez@usat.edu.pe\",\n  \"password\": \"PasswordIncorrecto\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "05 - Login (Usuario Inactivo - 403)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"inactivo@campusgo.pe\",\n  \"password\": \"CampusGo#2026\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "06 - Perfil (Con Token Valido - 200)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/perfil",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "perfil"
+          ]
+        }
+      }
+    },
+    {
+      "name": "07 - Perfil (Sin Token - 401)",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/perfil",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "perfil"
+          ]
+        }
+      }
+    },
+    {
+      "name": "08 - Crear Viaje (201 Created)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origen\": \"USAT\",\n  \"destino\": \"Chiclayo Centro\",\n  \"fecha\": \"2026-09-24\",\n  \"hora\": \"18:30:00\",\n  \"cupos\": 4,\n  \"precio\": 4.50\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/viajes",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "viajes"
+          ]
+        }
+      }
+    },
+    {
+      "name": "09 - Listar Todos los Viajes (200 OK)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/viajes",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "viajes"
+          ]
+        }
+      }
+    },
+    {
+      "name": "10 - Filtrar Viajes (Query Params - 200 OK)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/viajes?destino=Chiclayo&estado=DISPONIBLE",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "viajes"
+          ],
+          "query": [
+            {
+              "key": "destino",
+              "value": "Chiclayo"
+            },
+            {
+              "key": "estado",
+              "value": "DISPONIBLE"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "11 - Detalle Viaje Existente (200 OK)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/viajes/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "viajes",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "12 - Detalle Viaje Inexistente (404 Not Found)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/viajes/9999",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "viajes",
+            "9999"
+          ]
+        }
+      }
+    },
+    {
+      "name": "13 - Actualizar Viaje Propio (200 OK)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origen\": \"USAT\",\n  \"destino\": \"Chiclayo Centro\",\n  \"fecha\": \"2026-09-24\",\n  \"hora\": \"19:00:00\",\n  \"cupos\": 3,\n  \"precio\": 5.00\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/viajes/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "viajes",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "14 - Cancelar Viaje Propio (200 OK / 409 Conflicto)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/viajes/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "viajes",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "15 - Listar Mis Viajes Conductor (200 OK)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/viajes/mios",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "viajes",
+            "mios"
+          ]
+        }
+      }
+    },
+    {
+      "name": "16 - Ejercicio 1: Filtrar por Rango de Precio (200 OK)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/viajes?precio_min=2.00&precio_max=8.00",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "viajes"
+          ],
+          "query": [
+            {
+              "key": "precio_min",
+              "value": "2.00"
+            },
+            {
+              "key": "precio_max",
+              "value": "8.00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "17 - Ejercicio 2: Solo con Cupos Disponibles (200 OK)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/viajes?solo_disponibles=true",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "viajes"
+          ],
+          "query": [
+            {
+              "key": "solo_disponibles",
+              "value": "true"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "18 - Ejercicio 3: Filtrar por Rango de Fechas (200 OK)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/viajes?desde=2026-09-01&hasta=2026-12-31",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "viajes"
+          ],
+          "query": [
+            {
+              "key": "desde",
+              "value": "2026-09-01"
+            },
+            {
+              "key": "hasta",
+              "value": "2026-12-31"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "19 - Ejercicio 4: Mis Viajes con Filtro Estado (200 OK)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/viajes/mios?estado=DISPONIBLE",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "viajes",
+            "mios"
+          ],
+          "query": [
+            {
+              "key": "estado",
+              "value": "DISPONIBLE"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "20 - Ejercicio 5: Actualizar Solo Cupos (200 OK)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"cupos\": 3\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/viajes/1/cupos",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "viajes",
+            "1",
+            "cupos"
+          ]
+        }
+      }
+    },
+    {
+      "name": "21 - Ejercicio 6: Cambiar Estado de Viaje (200 OK)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"estado\": \"COMPLETO\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/viajes/1/estado",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "viajes",
+            "1",
+            "estado"
+          ]
+        }
+      }
+    },
+    {
+      "name": "22 - Ejercicio 10: Reporte Resumen por Estado (200 OK)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/viajes/resumen",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "viajes",
+            "resumen"
+          ]
+        }
+      }
+    },
+    {
+      "name": "23 - Reserva Solo Ida (201 Created)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"viajes\": [\n    {\n      \"viaje_id\": 11,\n      \"cantidad\": 1,\n      \"tipo_tramo\": \"IDA\"\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/reservas",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "reservas"
+          ]
+        }
+      }
+    },
+    {
+      "name": "24 - Reserva Ida + Retorno (201 Created)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"viajes\": [\n    {\n      \"viaje_id\": 11,\n      \"cantidad\": 1,\n      \"tipo_tramo\": \"IDA\"\n    },\n    {\n      \"viaje_id\": 12,\n      \"cantidad\": 1,\n      \"tipo_tramo\": \"RETORNO\"\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/reservas",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "reservas"
+          ]
+        }
+      }
+    },
+    {
+      "name": "25 - Reserva Sin Cupos (409 Rollback)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"viajes\": [\n    {\n      \"viaje_id\": 11,\n      \"cantidad\": 1,\n      \"tipo_tramo\": \"IDA\"\n    },\n    {\n      \"viaje_id\": 12,\n      \"cantidad\": 99,\n      \"tipo_tramo\": \"RETORNO\"\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/reservas",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "reservas"
+          ]
+        }
+      }
+    },
+    {
+      "name": "26 - Cancelar Reserva Transaccional (200 OK)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/reservas/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "reservas",
+            "1"
+          ]
+        }
+      }
+    }
+  ]
+}
